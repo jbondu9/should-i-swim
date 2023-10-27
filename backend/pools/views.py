@@ -3,19 +3,16 @@ from datetime import datetime, timezone
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from pools.models import Pool
-from pools.serializers import PoolDetailSerializer, PoolListSerializer
+from pools.serializers import PoolSerializer
 
 import requests
-
 
 ONE_DAY = 1
 FIFTEEN_MIN_IN_SECONDS = 15 * 60
 
 
 class PoolViewset(ReadOnlyModelViewSet):
-    serializer_class = PoolListSerializer
-
-    detail_serializer_class = PoolDetailSerializer
+    serializer_class = PoolSerializer
 
     def fetch(self):
         response = requests.get(
@@ -63,8 +60,3 @@ class PoolViewset(ReadOnlyModelViewSet):
                 )
 
         return Pool.objects.all().order_by("swimming_pool_name")
-
-    def get_serializer_class(self):
-        if self.action == "retrieve":
-            return self.detail_serializer_class
-        return super().get_serializer_class()

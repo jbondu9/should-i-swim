@@ -3,13 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from pools.models import Pool
 
 
-class PoolListSerializer(ModelSerializer):
-    class Meta:
-        model = Pool
-        fields = ["_id", "swimming_pool_name", "pool_name"]
-
-
-class PoolDetailSerializer(ModelSerializer):
+class PoolSerializer(ModelSerializer):
     class Meta:
         model = Pool
         fields = [
