@@ -5,9 +5,10 @@ export class Pool {
   poolName: string;
   swimmingPoolName: string;
 
-  open: boolean;
+  isOpened: boolean;
   currentCapacity: number;
   maximumCapacity: number;
+
   updatedAt: Date;
 
   constructor(pool?: ApiPool) {
@@ -15,9 +16,10 @@ export class Pool {
     this.poolName = pool?.pool_name ?? "";
     this.swimmingPoolName = pool?.swimming_pool_name ?? "";
 
-    this.open = pool?.open ?? false;
+    this.isOpened = pool?.is_opened ?? false;
     this.currentCapacity = pool?.current_capacity ?? 0;
     this.maximumCapacity = pool?.maximum_capacity ?? 0;
-    this.updatedAt = pool?.updated_at ?? new Date();
+
+    this.updatedAt = pool?.updated_at ? new Date(pool.updated_at) : new Date();
   }
 }

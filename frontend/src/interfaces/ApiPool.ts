@@ -3,8 +3,9 @@ export interface ApiPool {
   pool_name: string;
   swimming_pool_name: string;
 
-  open: boolean;
+  is_opened: boolean;
   current_capacity: number;
   maximum_capacity: number;
+
   updated_at: Date;
 }
