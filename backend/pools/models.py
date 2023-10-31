@@ -1,6 +1,6 @@
-from django.db import models
-
 from datetime import datetime, timezone
+
+from django.db import models
 
 import requests
 
@@ -20,20 +20,17 @@ class Pool(models.Model):
     current_capacity = models.DecimalField(default=0, max_digits=5, decimal_places=2)
     maximum_capacity = models.IntegerField(default=0)
 
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField()
 
-    def __str__(self) -> str:
-        return f"{self.swimming_pool_name} - {self.pool_name} ({self.updated_at})"
-
-    def get_refresh_data(self):
+    def get_refreshed_data(self):
         response = requests.get(
             f"https://opendata.bordeaux-metropole.fr/api/explore/v2.1/catalog/datasets/bor_frequentation_piscine_tr/records?select=fmizonnum%2C%20fmicourante%2C%20entree%2C%20datemiseajour&where=fmizonnum%20%3D%20{self._id}&limit=1"
         )
         response.raise_for_status()
         return response.json()
 
-    def set_refresh_data(self):
-        data = self.get_refresh_data()
+    def set_refreshed_data(self):
+        data = self.get_refreshed_data()
 
         for entry in data["results"]:
             self.is_opened = (
@@ -43,7 +40,7 @@ class Pool(models.Model):
 
             self.current_capacity = (
                 (entry["fmicourante"] / self.maximum_capacity) * 100
-                if self.maximum_capacity > 0
+                if self.maximum_capacity > 0 and entry["fmicourante"] > 0
                 else 0
             )
 

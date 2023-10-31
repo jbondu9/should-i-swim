@@ -4,24 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Pool',
+            name="Pool",
             fields=[
-                ('_id', models.IntegerField(primary_key=True, serialize=False)),
-                ('photo', models.ImageField(upload_to='')),
-                ('pool_name', models.CharField(max_length=255)),
-                ('swimming_pool_name', models.CharField(max_length=255)),
-                ('is_opened', models.BooleanField(default=False)),
-                ('current_capacity', models.DecimalField(decimal_places=2, default=0, max_digits=5)),
-                ('maximum_capacity', models.IntegerField(default=0)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
+                ("_id", models.IntegerField(primary_key=True, serialize=False)),
+                ("photo", models.ImageField(upload_to="")),
+                ("pool_name", models.CharField(max_length=255)),
+                ("swimming_pool_name", models.CharField(max_length=255)),
+                ("is_opened", models.BooleanField(default=False)),
+                (
+                    "current_capacity",
+                    models.DecimalField(decimal_places=2, default=0, max_digits=5),
+                ),
+                ("maximum_capacity", models.IntegerField(default=0)),
+                ("updated_at", models.DateTimeField()),
             ],
         ),
     ]

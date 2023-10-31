@@ -14,10 +14,14 @@ class PoolViewset(ReadOnlyModelViewSet):
 
     def get_serializer_class(self):
         if self.action == "retrieve":
-            instance = self.get_object()
-
-            if instance.has_to_be_refreshed():
-                instance.set_refresh_data()
-
             return self.detail_serializer_class
         return super().get_serializer_class()
+
+    def update_pool_data(self, instance):
+        if instance.has_to_be_refreshed():
+            instance.set_refreshed_data()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.update_pool_data(instance)
+        return super().retrieve(request, *args, **kwargs)
