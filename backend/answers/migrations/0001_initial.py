@@ -5,22 +5,41 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Answer',
+            name="Answer",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('reason_name', models.CharField(choices=[(answers.enums.Reason['CLOSED'], 'CLOSED'), (answers.enums.Reason['NEARLY_EMPTY'], 'NEARLY_EMPTY'), (answers.enums.Reason['FEW_PEOPLE'], 'FEW_PEOPLE'), (answers.enums.Reason['HALF_FULL'], 'HALF_FULL'), (answers.enums.Reason['CROWED'], 'CROWED'), (answers.enums.Reason['TOTALLY_FULL'], 'TOTALLY_FULL')], max_length=12)),
-                ('reason_description', models.CharField(max_length=255)),
-                ('open', models.BooleanField(default=True)),
-                ('lower_bound', models.IntegerField(default=0)),
-                ('upper_bound', models.IntegerField(default=100)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "reason_name",
+                    models.CharField(
+                        choices=[
+                            (answers.enums.Reason["CLOSED"], "CLOSED"),
+                            (answers.enums.Reason["NEARLY_EMPTY"], "NEARLY_EMPTY"),
+                            (answers.enums.Reason["FEW_PEOPLE"], "FEW_PEOPLE"),
+                            (answers.enums.Reason["HALF_FULL"], "HALF_FULL"),
+                            (answers.enums.Reason["CROWED"], "CROWED"),
+                            (answers.enums.Reason["TOTALLY_FULL"], "TOTALLY_FULL"),
+                        ],
+                        max_length=12,
+                    ),
+                ),
+                ("reason_description", models.CharField(max_length=255)),
+                ("open", models.BooleanField(default=True)),
+                ("lower_bound", models.IntegerField(default=0)),
+                ("upper_bound", models.IntegerField(default=100)),
             ],
         ),
     ]
