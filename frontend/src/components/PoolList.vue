@@ -20,9 +20,21 @@ onMounted(() => {
 
 <template>
     <PoolDetail :pool="selectedPool" />
-    <div v-for="pool in poolList" @click="selectedPool = pool">
-        <div>
-            <p>{{ pool.swimmingPoolName }} - {{ pool.poolName }}</p>
+    <div class="flex items-center max-w-xs mx-auto mb-4 h-24 bg-white rounded shadow-md" v-for="pool in poolList"
+        @click="selectedPool = pool">
+        <div class="w-full">
+            <div class="flex">
+                <div class="shrink-0">
+                    <div class="-rotate-[8deg] h-20 w-20 bg-blue-800 rounded">
+                        <img class="-rotate-[12deg] h-20 w-20 object-cover rounded shadow" src=""
+                            :alt="pool.swimmingPoolName" />
+                    </div>
+                </div>
+                <div class="px-6 py-4 w-full">
+                    <div class="uppercase text-sm tracking-wide font-semibold">{{ pool.swimmingPoolName }}</div>
+                    <p class="text-xs text-slate-500">{{ pool.poolName }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>

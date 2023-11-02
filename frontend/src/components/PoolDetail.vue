@@ -50,7 +50,4 @@ watch(
         <p>{{ pool.swimmingPoolName }} - {{ pool.poolName }}</p>
         <p>{{ pool.currentCapacity }} - {{ pool.updatedAt }}</p>
     </div>
-    <div v-else>
-        <p>Click on a pool man!</p>
-    </div>
 </template>
