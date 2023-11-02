@@ -45,9 +45,8 @@ watch(
 </script>
 
 <template>
-    <div v-if="answer && pool">
-        <p>{{ answer.reasonDescription }}</p>
-        <p>{{ pool.swimmingPoolName }} - {{ pool.poolName }}</p>
-        <p>{{ pool.currentCapacity }} - {{ pool.updatedAt }}</p>
+    <div class="flex justify-center items-center max-w-4xl mx-auto h-[40vh]" v-if="answer && pool">
+        <p class="w-full p-1 text-white text-2xl lg:text-5xl text-center uppercase font-bold">{{ answer.reasonDescription }}
+        </p>
     </div>
 </template>
