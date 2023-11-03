@@ -33,12 +33,12 @@ watch(
 
           axios.get<ApiAnswer[]>(url).then((response) => {
             answer.value = new Answer(
-              response.data[Math.floor(Math.random() * response.data.length)]
+              response.data[Math.floor(Math.random() * response.data.length)],
             );
           });
         }
       });
-  }
+  },
 );
 </script>
 

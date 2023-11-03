@@ -7,7 +7,4 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["vue"],
-  rules: {
-    "vue/no-unused-vars": "error",
-  },
 };
