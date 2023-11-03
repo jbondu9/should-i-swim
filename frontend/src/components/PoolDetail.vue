@@ -45,10 +45,10 @@ watch(
 <template>
   <div
     v-if="answer && poolRef"
-    class="flex justify-center items-center max-w-4xl mx-auto h-[40vh]"
+    class="mx-auto flex h-[40vh] max-w-4xl items-center justify-center"
   >
     <p
-      class="w-full p-1 text-white text-2xl lg:text-5xl text-center uppercase font-bold"
+      class="w-full p-1 text-center text-2xl font-bold uppercase text-white lg:text-5xl"
     >
       {{ answer.reasonDescription }}
     </p>

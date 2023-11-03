@@ -11,7 +11,7 @@ const selectedPool = ref<Pool>();
 
 <template>
   <div
-    class="flex flex-col justify-between h-screen overflow-hidden bg-gradient-to-b from-blue-800 to-cyan-600"
+    class="flex h-screen flex-col justify-between overflow-hidden bg-gradient-to-b from-blue-800 to-cyan-600"
   >
     <div>
       <PoolDetail :pool="selectedPool" />
