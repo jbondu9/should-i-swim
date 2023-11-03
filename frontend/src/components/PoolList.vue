@@ -21,9 +21,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-[50vh]" v-if="poolList">
+  <div v-if="poolList" class="h-[50vh]">
     <div
       v-for="pool in poolList"
+      :key="pool.id"
       class="flex items-center max-w-xs mx-auto mb-4 h-24 bg-white rounded shadow-md transition-opacity duration-700"
       :class="{ 'opacity-50': selectedPool?.id != pool.id }"
       @click="
