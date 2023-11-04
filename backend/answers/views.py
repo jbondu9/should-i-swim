@@ -1,3 +1,7 @@
+from random import randrange
+
+from rest_framework.response import Response
+from rest_framework.status import HTTP_404_NOT_FOUND
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from answers.models import Answer
@@ -10,15 +14,28 @@ class AnswerViewset(ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset = Answer.objects.all()
 
-        open = self.request.query_params.get("open")
-        bound = self.request.query_params.get("bound")
+        open_param = self.request.query_params.get("open")
+        bound_param = self.request.query_params.get("bound")
 
-        if open is not None:
-            queryset = queryset.filter(open=False if open == "false" else True)
+        if open_param is not None:
+            is_open = open_param.lower() == "true"
+            queryset = queryset.filter(open=is_open)
 
-        if bound is not None:
+        if bound_param is not None:
+            bound_value = float(bound_param)
             queryset = queryset.filter(
-                lower_bound__lt=float(bound), upper_bound__gte=float(bound)
+                lower_bound__lt=bound_value, upper_bound__gte=bound_value
             )
 
         return queryset
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+
+        if queryset.exists():
+            k = randrange(queryset.count())
+            random_answer = queryset[k]
+            serializer = self.get_serializer(random_answer)
+            return Response(serializer.data)
+        else:
+            return Response({"message": "No answers found."}, status=HTTP_404_NOT_FOUND)

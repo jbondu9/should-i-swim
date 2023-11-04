@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import axios from "axios";
-
-import { ref, watch } from "vue";
-
 import { Answer } from "../classes/Answer";
 import { Pool } from "../classes/Pool";
-
 import { ApiAnswer } from "../interfaces/ApiAnswer";
 import { ApiPool } from "../interfaces/ApiPool";
+import axios from "axios";
+import { ref, watch } from "vue";
 
 const props = defineProps<{ pool?: Pool }>();
 
@@ -31,10 +28,8 @@ watch(
             url = `${url}open=true&bound=${poolRef.value.currentCapacity}`;
           }
 
-          axios.get<ApiAnswer[]>(url).then((response) => {
-            answer.value = new Answer(
-              response.data[Math.floor(Math.random() * response.data.length)],
-            );
+          axios.get<ApiAnswer>(url).then((response) => {
+            answer.value = new Answer(response.data);
           });
         }
       });

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 import { Pool } from "./classes/Pool";
-
 import PoolDetail from "./components/PoolDetail.vue";
 import PoolList from "./components/PoolList.vue";
+import { ref } from "vue";
 
 const selectedPool = ref<Pool>();
 </script>

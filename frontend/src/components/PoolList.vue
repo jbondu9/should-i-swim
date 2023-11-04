@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import axios from "axios";
-
-import { onMounted, ref } from "vue";
-
 import { Pool } from "../classes/Pool";
 import { ApiPool } from "../interfaces/ApiPool";
+import axios from "axios";
+import { onMounted, ref } from "vue";
 
 const poolList = ref<Pool[]>([]);
 const selectedPool = ref<Pool>();
