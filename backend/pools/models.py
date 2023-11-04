@@ -1,9 +1,8 @@
 from datetime import datetime, timezone
 
-from django.db import models
-
 import requests
 
+from django.db import models
 
 FIFTEEN_MIN_IN_SECONDS = 15 * 60
 ONE_DAY = 1

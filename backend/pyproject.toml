@@ -1,0 +1,6 @@
+[tool.ruff.lint]
+select = ["E", "DJ", "I", "N", "T20"]
+ignore = ["DJ008"]
+
+[tool.ruff.lint.isort]
+lines-between-types = 1

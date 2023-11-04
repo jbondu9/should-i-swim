@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from pools.models import Pool
-from pools.serializers import PoolSerializer, PoolDetailSerializer
+from pools.serializers import PoolDetailSerializer, PoolSerializer
 
 
 class PoolViewset(ReadOnlyModelViewSet):

@@ -6,7 +6,8 @@ from answers.enums import Reason
 
 
 def create_some_answers(apps, schema_editor):
-    Answer = apps.get_model("answers", "Answer")
+    # We make reference to the model here
+    Answer = apps.get_model("answers", "Answer")  # noqa: N806
 
     Answer.objects.create(
         reason_name=Reason.CLOSED.value,

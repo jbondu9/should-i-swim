@@ -1,10 +1,8 @@
 from datetime import datetime
+from unittest.mock import patch
 
 from django.urls import reverse, reverse_lazy
-
 from rest_framework.test import APITestCase
-
-from unittest.mock import patch
 
 from pools.mocks import (
     CURRENT_CAPACITY,
