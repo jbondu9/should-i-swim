@@ -1,20 +1,56 @@
 fail_fast: true
 
 repos:
+  - repo: https://github.com/python-poetry/poetry
+    rev: "1.7.0"
+    hooks:
+      - id: poetry-check
+        args: ["-C", "./backend"]
+      - id: poetry-lock
+        args: ["-C", "./backend"]
+      - id: poetry-export
+        args:
+          [
+            "-C",
+            "./backend",
+            "-f",
+            "requirements.txt",
+            "-o",
+            "./backend/requirements.txt",
+            "--without-hashes",
+          ]
+      - id: poetry-export
+        args:
+          [
+            "-C",
+            "./backend",
+            "-f",
+            "requirements.txt",
+            "-o",
+            "./backend/requirements-dev.txt",
+            "--without-hashes",
+            "--only",
+            "dev",
+          ]
+      - id: poetry-install
+        args: ["-C", "./backend"]
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.4
+    rev: "v0.1.4"
     hooks:
       - id: ruff
-        args: [--config, backend/pyproject.toml]
+        args: ["--config", "./backend/pyproject.toml"]
+
   - repo: https://github.com/psf/black-pre-commit-mirror
     rev: "23.10.1"
     hooks:
       - id: black
+
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: "v8.52.0"
     hooks:
       - id: eslint
-        args: [--config, frontend/.eslintrc.cjs, --max-warnings=0]
+        args: ["--config", "./frontend/.eslintrc.cjs", "--max-warnings=0"]
         additional_dependencies:
           - "@typescript-eslint/eslint-plugin@6.9.1"
           - "@typescript-eslint/parser@6.9.1"
@@ -24,6 +60,7 @@ repos:
           - eslint-plugin-vue@9.18.1
           - vue-eslint-parser@9.3.2
         files: \.(js|ts|vue)$
+
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: "v3.0.3"
     hooks:

@@ -1,6 +1,29 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = "\"Should I Swim?\"'s API"
+authors = [
+    "Jimmy Bondu <jimmy.bondu@zoho.com",
+]
+readme = "../README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2.7"
+djangorestframework = "^3.14.0"
+django-cors-headers = "^4.3.0"
+pillow = "^10.1.0"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.10.1"
+ruff = "^0.1.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.ruff.lint]
-select = ["E", "DJ", "I", "N", "T20"]
+select = ["E", "DJ", "N", "T20"]
 ignore = ["DJ008"]
 
-[tool.ruff.lint.isort]
-lines-between-types = 1
