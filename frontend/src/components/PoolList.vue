@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import axios from "axios";
+import { onMounted, ref, watch } from "vue";
+
 import { Pool } from "../classes/Pool";
 import { ApiPool } from "../interfaces/ApiPool";
-import axios from "axios";
-import { onMounted, ref } from "vue";
 
 const poolList = ref<Pool[]>([]);
 const selectedPool = ref<Pool>();
@@ -12,43 +13,49 @@ const emit = defineEmits(["selectedPool"]);
 onMounted(() => {
   axios.get<ApiPool[]>("http://127.0.0.1:8000/api/pool/").then((response) => {
     poolList.value = response.data.map((pool: ApiPool) => new Pool(pool));
-    selectedPool.value = poolList.value[0];
+    const k = Math.floor(Math.random() * poolList.value.length);
+    selectedPool.value = poolList.value[k];
     emit("selectedPool", selectedPool.value);
   });
+});
+
+watch(selectedPool, (newSelectedPool) => {
+  emit("selectedPool", newSelectedPool);
 });
 </script>
 
 <template>
-  <div v-if="poolList" class="h-[50vh]">
-    <div
-      v-for="pool in poolList"
-      :key="pool.id"
-      class="mx-auto mb-4 flex h-24 max-w-xs items-center rounded bg-white shadow-md transition-opacity duration-700"
-      :class="{ 'opacity-50': selectedPool?.id != pool.id }"
-      @click="
-        selectedPool = pool;
-        $emit('selectedPool', pool);
-      "
-    >
-      <div class="w-full">
-        <div class="flex">
-          <div class="shrink-0">
-            <div class="h-20 w-20 rotate-[-11deg] rounded bg-blue-900">
-              <img
-                class="h-20 w-20 rotate-[-12deg] rounded object-cover shadow"
-                src="https://images.unsplash.com/photo-1576610616656-d3aa5d1f4534?auto=format&fit=crop&q=80&w=1470&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                :alt="pool.swimmingPoolName"
-              />
-            </div>
-          </div>
-          <div class="w-full px-6 py-4">
-            <div class="text-sm font-semibold capitalize tracking-wide">
-              {{ pool.swimmingPoolName }}
-            </div>
-            <p class="text-xs capitalize text-slate-500">{{ pool.poolName }}</p>
-          </div>
-        </div>
-      </div>
+  <div class="self-end py-4 text-center">
+    <div v-if="poolList && selectedPool" class="mb-6 text-lg md:text-sm">
+      <label for="pool-list">Choose another pool:</label>
+      <select
+        id="pool-list"
+        v-model="selectedPool"
+        name="pools"
+        class="ml-1 rounded border border-gray-500 bg-white p-1"
+      >
+        <option
+          v-for="pool in poolList"
+          :key="pool.id"
+          :value="pool"
+          :selected="pool.id === selectedPool.id"
+        >
+          {{ pool.swimmingPoolName }} - {{ pool.poolName }}
+        </option>
+      </select>
+    </div>
+    <div class="text-sm">
+      <ul>
+        <li>
+          Source:
+          <a
+            href="https://github.com/jbondu9/should-i-swim"
+            target="_blank"
+            class="text-gray-500 underline"
+            >Github</a
+          >
+        </li>
+      </ul>
     </div>
   </div>
 </template>
