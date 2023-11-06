@@ -1,4 +1,4 @@
-from random import randrange
+from random import choice
 
 from rest_framework.response import Response
 from rest_framework.status import HTTP_404_NOT_FOUND
@@ -22,10 +22,13 @@ class AnswerViewset(ReadOnlyModelViewSet):
             queryset = queryset.filter(open=is_open)
 
         if bound_param is not None:
-            bound_value = float(bound_param)
-            queryset = queryset.filter(
-                lower_bound__lt=bound_value, upper_bound__gte=bound_value
-            )
+            try:
+                bound_value = float(bound_param)
+                queryset = queryset.filter(
+                    lower_bound__lt=bound_value, upper_bound__gte=bound_value
+                )
+            except ValueError:
+                pass
 
         return queryset
 
@@ -33,8 +36,7 @@ class AnswerViewset(ReadOnlyModelViewSet):
         queryset = self.get_queryset()
 
         if queryset.exists():
-            k = randrange(queryset.count())
-            random_answer = queryset[k]
+            random_answer = choice(queryset)
             serializer = self.get_serializer(random_answer)
             return Response(serializer.data)
         else:

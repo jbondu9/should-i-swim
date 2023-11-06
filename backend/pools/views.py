@@ -18,7 +18,7 @@ class PoolViewset(ReadOnlyModelViewSet):
         return super().get_serializer_class()
 
     def update_pool_data(self, instance):
-        if instance.has_to_be_refreshed():
+        if instance.has_to_be_refreshed:
             instance.set_refreshed_data()
 
     def retrieve(self, request, *args, **kwargs):
