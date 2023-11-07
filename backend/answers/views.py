@@ -40,4 +40,7 @@ class AnswerViewset(ReadOnlyModelViewSet):
             serializer = self.get_serializer(random_answer)
             return Response(serializer.data)
         else:
-            return Response({"message": "No answers found."}, status=HTTP_404_NOT_FOUND)
+            return Response(
+                {"message": "Something went wrong with the source, retry later"},
+                status=HTTP_404_NOT_FOUND,
+            )
