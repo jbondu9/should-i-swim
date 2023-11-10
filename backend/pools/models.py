@@ -4,6 +4,8 @@ import requests
 
 from django.db import models
 
+from pools.utils import time_difference_from_now
+
 FIFTEEN_MIN_IN_SECONDS = 15 * 60
 ONE_DAY = 1
 
@@ -22,12 +24,10 @@ class Pool(models.Model):
     updated_at = models.DateTimeField()
 
     @property
-    def time_difference(self):
-        return datetime.now(timezone.utc) - self.updated_at.replace(tzinfo=timezone.utc)
-
-    @property
     def has_to_be_refreshed(self):
-        return (self.time_difference).seconds > FIFTEEN_MIN_IN_SECONDS
+        return (
+            time_difference_from_now(self.updated_at).seconds > FIFTEEN_MIN_IN_SECONDS
+        )
 
     def get_refreshed_data(self):
         response = requests.get(
@@ -44,7 +44,10 @@ class Pool(models.Model):
 
         entry = data["results"][0]
 
-        if (self.time_difference).days < ONE_DAY and entry["entree"] > 0:
+        if (
+            time_difference_from_now(self.updated_at).days < ONE_DAY
+            and entry["entree"] > 0
+        ):
             self.is_opened = True
 
         if self.maximum_capacity > 0 and entry["fmicourante"] > 0:
