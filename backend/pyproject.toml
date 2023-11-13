@@ -2,9 +2,7 @@
 name = "backend"
 version = "0.1.0"
 description = "\"Should I Swim?\"'s API"
-authors = [
-    "Jimmy Bondu <jimmy.bondu@zoho.com",
-]
+authors = ["Jimmy Bondu <jimmy.bondu@zoho.com>"]
 readme = "../README.md"
 
 [tool.poetry.dependencies]
@@ -26,4 +24,3 @@ build-backend = "poetry.core.masonry.api"
 [tool.ruff.lint]
 select = ["E", "DJ", "N", "T20"]
 ignore = ["DJ008"]
-

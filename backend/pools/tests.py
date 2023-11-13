@@ -64,7 +64,7 @@ class TestPool(APITestCase):
         self.assertEqual(response.status_code, 405)
         self.assertEqual(Pool.objects.count(), pool_count)
 
-    @patch("pools.models.datetime")
+    @patch("pools.utils.datetime")
     def test_detail_without_update(self, mock_datetime):
         mock_datetime.now.return_value = datetime.fromisoformat(UPDATED_AT)
 
@@ -74,7 +74,7 @@ class TestPool(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.get_pool_detail(self.pool), response.json())
 
-    @patch("pools.models.datetime")
+    @patch("pools.utils.datetime")
     @patch("pools.models.Pool.get_refreshed_data", mock_get_refreshed_data)
     def test_detail_with_update(self, mock_datetime):
         mock_datetime.now.return_value = datetime.fromisoformat(NOW)
