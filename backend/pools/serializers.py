@@ -6,7 +6,7 @@ from pools.models import Pool
 class PoolSerializer(ModelSerializer):
     class Meta:
         model = Pool
-        fields = ["_id", "pool_name", "swimming_pool_name"]
+        fields = ["_id", "swimming_pool", "basin"]
 
 
 class PoolDetailSerializer(ModelSerializer):
@@ -14,8 +14,8 @@ class PoolDetailSerializer(ModelSerializer):
         model = Pool
         fields = [
             "_id",
-            "pool_name",
-            "swimming_pool_name",
+            "swimming_pool",
+            "basin",
             "is_opened",
             "current_capacity",
             "maximum_capacity",

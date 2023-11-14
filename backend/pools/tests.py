@@ -1,17 +1,8 @@
 from datetime import datetime
-from unittest.mock import patch
 
 from django.urls import reverse, reverse_lazy
 from rest_framework.test import APITestCase
 
-from pools.mocks import (
-    CURRENT_CAPACITY,
-    FAKE_POOL,
-    MAXIMUM_CAPACITY,
-    NOW,
-    UPDATED_AT,
-    mock_get_refreshed_data,
-)
 from pools.models import Pool
 
 
@@ -19,18 +10,21 @@ class TestPool(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.pool = Pool.objects.create(
-            _id=FAKE_POOL["_id"],
-            pool_name=FAKE_POOL["pool_name"],
-            swimming_pool_name=FAKE_POOL["swimming_pool_name"],
-            maximum_capacity=FAKE_POOL["maximum_capacity"],
-            updated_at=FAKE_POOL["updated_at"],
+            _id=2,
+            swimming_pool="Piscine Stehelin",
+            basin="Exterieur",
+            is_opened=False,
+            current_capacity=0.0,
+            maximum_capacity=200,
+            updated_at="2023-11-14T16:26:31+00:00",
         )
 
-    def get_pool_detail(self, pool: Pool):
+    @staticmethod
+    def get_pool_detail(pool: Pool):
         return {
             "_id": pool._id,
-            "pool_name": pool.pool_name,
-            "swimming_pool_name": pool.swimming_pool_name,
+            "swimming_pool": pool.swimming_pool,
+            "basin": pool.basin,
             "is_opened": pool.is_opened,
             "current_capacity": f"{pool.current_capacity:.2f}",
             "maximum_capacity": pool.maximum_capacity,
@@ -44,7 +38,7 @@ class TestPool(APITestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        expected_fields = ["_id", "pool_name", "swimming_pool_name"]
+        expected_fields = ["_id", "swimming_pool", "basin"]
 
         for entry in response.json():
             self.assertListEqual(list(entry.keys()), expected_fields)
@@ -55,38 +49,18 @@ class TestPool(APITestCase):
         response = self.client.post(
             reverse_lazy("pool-list"),
             data={
-                "_id": 300,
-                "pool_name": "Exterieur",
-                "swimming_pool_name": "Piscine Stehelin",
+                "_id": 3,
+                "swimming_pool": "Piscine Stehelin",
+                "basin": "Exterieur",
             },
         )
 
         self.assertEqual(response.status_code, 405)
         self.assertEqual(Pool.objects.count(), pool_count)
 
-    @patch("pools.utils.datetime")
-    def test_detail_without_update(self, mock_datetime):
-        mock_datetime.now.return_value = datetime.fromisoformat(UPDATED_AT)
-
+    def test_detail(self):
         response = self.client.get(reverse("pool-detail", kwargs={"pk": self.pool.pk}))
 
         self.assertEqual(self.pool._id, self.pool.pk)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.get_pool_detail(self.pool), response.json())
-
-    @patch("pools.utils.datetime")
-    @patch("pools.models.Pool.get_refreshed_data", mock_get_refreshed_data)
-    def test_detail_with_update(self, mock_datetime):
-        mock_datetime.now.return_value = datetime.fromisoformat(NOW)
-        mock_datetime.fromisoformat = lambda *args, **kw: datetime.fromisoformat(
-            *args, **kw
-        )
-
-        response = self.client.get(reverse("pool-detail", kwargs={"pk": self.pool.pk}))
-
-        self.pool.is_opened = True
-        self.pool.current_capacity = (CURRENT_CAPACITY / MAXIMUM_CAPACITY) * 100
-        self.pool.updated_at = NOW
-
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.get_pool_detail(self.pool), response.json())

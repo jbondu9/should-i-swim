@@ -1,7 +1,7 @@
 export interface ApiPool {
   _id: number;
-  pool_name: string;
-  swimming_pool_name: string;
+  swimming_pool: string;
+  basin: string;
 
   is_opened: boolean;
   current_capacity: number;
