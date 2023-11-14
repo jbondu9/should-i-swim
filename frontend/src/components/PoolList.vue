@@ -40,7 +40,7 @@ watch(selectedPool, (newSelectedPool) => {
           :value="pool"
           :selected="pool.id === selectedPool.id"
         >
-          {{ pool.swimmingPoolName }} - {{ pool.poolName }}
+          {{ pool.swimmingPool }} - {{ pool.basin }}
         </option>
       </select>
     </div>

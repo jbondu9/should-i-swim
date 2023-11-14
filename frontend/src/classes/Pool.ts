@@ -2,8 +2,8 @@ import { ApiPool } from "../interfaces/ApiPool";
 
 export class Pool {
   id: number;
-  poolName: string;
-  swimmingPoolName: string;
+  swimmingPool: string;
+  basin: string;
 
   isOpened: boolean;
   currentCapacity: number;
@@ -13,8 +13,8 @@ export class Pool {
 
   constructor(pool?: ApiPool) {
     this.id = pool?._id ?? 0;
-    this.poolName = pool?.pool_name ?? "";
-    this.swimmingPoolName = pool?.swimming_pool_name ?? "";
+    this.swimmingPool = pool?.swimming_pool ?? "";
+    this.basin = pool?.basin ?? "";
 
     this.isOpened = pool?.is_opened ?? false;
     this.currentCapacity = pool?.current_capacity ?? 0;
