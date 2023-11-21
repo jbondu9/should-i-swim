@@ -51,7 +51,7 @@ class OpenDataBordeauxProvider(OpenDataProvider):
                 "_id": entry["fmizonnum"],
                 "swimming_pool": entry["etablissement_etalib"],
                 "basin": entry["fmizonlib"],
-                "is_opened": self.is_opened(updated_at, entry["entree"]),
+                "is_opened": self.is_opened(updated_at, entry["fmicourante"]),
                 "current_capacity": self.current_capacity(
                     entry["fmicourante"], entry["fmizonmax"]
                 ),

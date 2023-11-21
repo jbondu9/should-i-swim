@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from answers.enums import Reason
 
 
-class TestAnswer(APITestCase):
+class AnswerViewsetTestCase(APITestCase):
     url = reverse_lazy("answer-list")
 
     def test_list_without_params(self):
