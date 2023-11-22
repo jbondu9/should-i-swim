@@ -55,11 +55,23 @@ watch(
     >
       Should I swim now?
     </h2>
-    <h3
-      v-if="answer && poolRef"
-      class="px-8 text-4xl font-black uppercase md:px-24 md:text-7xl"
-    >
-      {{ answer.description }}
-    </h3>
+    <div v-if="answer && poolRef">
+      <h3 class="mb-4 px-8 text-4xl font-black uppercase md:px-24 md:text-7xl">
+        {{ answer.description }}
+      </h3>
+      <ul class="flex justify-center text-sm">
+        <li>
+          Opening status:
+          <span class="text-gray-500">{{
+            poolRef.isOpened ? "Open" : "Close"
+          }}</span>
+        </li>
+        <li class="mx-2">-</li>
+        <li>
+          Current capacity:
+          <span class="text-gray-500">{{ poolRef.currentCapacity }}%</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
