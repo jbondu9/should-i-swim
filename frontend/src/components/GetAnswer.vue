@@ -38,7 +38,7 @@ watch(
               })
               .catch((error: ApiError) => {
                 answer.value = new Answer({
-                  reason_description: error.message,
+                  description: error.message,
                 });
               });
           }
@@ -59,7 +59,7 @@ watch(
       v-if="answer && poolRef"
       class="px-8 text-4xl font-black uppercase md:px-24 md:text-7xl"
     >
-      {{ answer.reasonDescription }}
+      {{ answer.description }}
     </h3>
   </div>
 </template>

@@ -1,10 +1,8 @@
-from datetime import datetime
-
 from django.urls import reverse, reverse_lazy
 from rest_framework.test import APITestCase
 
-from pools.tests import factories
 from pools.models import Pool
+from pools.tests import factories
 
 
 class PoolViewsetTestCase(APITestCase):
